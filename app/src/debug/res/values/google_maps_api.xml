@@ -1,0 +1,24 @@
+<resources>
+    <!--
+    TODO: Before you run your application, you need a Google Maps API key.
+
+    To get one, follow this link, follow the directions and press "Create" at the end:
+
+    https://console.developers.google.com/flows/enableapi?apiid=maps_android_backend&keyType=CLIENT_SIDE_ANDROID&r=82:90:4B:91:F7:94:89:AF:1C:36:9F:54:81:2A:F4:FC:EF:FB:E5:33%3Bcom.tolga.uberriderapp
+
+    You can also add your credentials to an existing key, using these values:
+
+    Package name:
+    com.tolga.uberriderapp
+
+    SHA-1 certificate fingerprint:
+    82:90:4B:91:F7:94:89:AF:1C:36:9F:54:81:2A:F4:FC:EF:FB:E5:33
+
+    Alternatively, follow the directions here:
+    https://developers.google.com/maps/documentation/android/start#get-key
+
+    Once you have your key (it starts with "AIza"), replace the "google_maps_key"
+    string in this file.
+    -->
+    <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">>AIzaSyByhoRGoC67juoLtnRbyp-LR3K-89KLhbQ</string>
+</resources>

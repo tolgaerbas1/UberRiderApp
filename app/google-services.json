@@ -1,0 +1,69 @@
+{
+  "project_info": {
+    "project_number": "286171405461",
+    "firebase_url": "https://uber-e91a8.firebaseio.com",
+    "project_id": "uber-e91a8",
+    "storage_bucket": "uber-e91a8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:286171405461:android:780a37bc42e7615dbe8f9c",
+        "android_client_info": {
+          "package_name": "com.tolga.uber"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "286171405461-q742bd3rpujb57jdv1ojoqo1oi1km817.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBTkuMrF9LjNvVGm1DVEXK5rXAyjw940J8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "286171405461-q742bd3rpujb57jdv1ojoqo1oi1km817.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:286171405461:android:f8a78ee11a3ab2a5be8f9c",
+        "android_client_info": {
+          "package_name": "com.tolga.uberriderapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "286171405461-q742bd3rpujb57jdv1ojoqo1oi1km817.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBTkuMrF9LjNvVGm1DVEXK5rXAyjw940J8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "286171405461-q742bd3rpujb57jdv1ojoqo1oi1km817.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
