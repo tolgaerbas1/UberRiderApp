@@ -5,8 +5,8 @@
     android:background="@drawable/rider_splash_screen"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp"
-    >
+    android:padding="16dp">
+
     <LinearLayout
         android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
@@ -27,6 +27,7 @@
             android:drawableStart="@drawable/ic_baseline_phone_24"
             android:text="Sign In with Phone"
             android:textColor="@android:color/black"/>
+
         <Button
             android:id="@+id/btn_google_sign_in"
             android:padding="16dp"

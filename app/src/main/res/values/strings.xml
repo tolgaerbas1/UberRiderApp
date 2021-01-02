@@ -23,4 +23,23 @@
     <string name="not_found_key">Driver is not found with key</string>
     <string name="welcome">Good afternoon</string>
     <string name="choose_a_saved_place">Choose a saved place</string>
+    <string name="city_name_empty">City name is empty</string>
+    <string name="where_to">where to</string>
+    <string name="title_activity_request_driver">Map</string>
+    <string name="pay_by_cash">Pay by Cash</string>
+    <string name="confirm_uber">Confırm Uber</string>
+    <string name="confirm_pickup_uber">Confirm Pickup Spot</string>
+    <string name="address_demo">301 Carrian Cove Trail West</string>
+    <string name="confirm_pickup">Confirm Pickup Spot</string>
+    <string name="meet_driver_here">Meet with driver here</string>
+    <string name="finding_your_ride">Find your ride</string>
+    <string name="token_not_found">Token not found</string>
+    <string name="request_driver_failed">Failed to send request to driver</string>
+    <string name="no_driver_accept_request">There are no driver that accept your request</string>
+    <string name="trip_not_found">Trip not found with key</string>
+    <string name="uber_x">Hyundai Tucson</string>
+    <string name="car_number_example">TTT12</string>
+    <string name="driver_name_example">Jonathan Wick</string>
+    <string name="ascii_dot">■</string>
+    <string name="language_example">Knows English</string>
 </resources>

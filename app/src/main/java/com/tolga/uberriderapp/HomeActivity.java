@@ -48,27 +48,30 @@ public class HomeActivity extends AppCompatActivity {
     private StorageReference storageReference;
     private Uri imageUri;
     private ImageView img_avatar;
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
 
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        NavigationView navigationView = findViewById(R.id.nav_view);
+
+        drawer = findViewById(R.id.drawer_layout);
+        navigationView = findViewById(R.id.nav_view);
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow)
-                .setDrawerLayout(drawer)
+                R.id.nav_home,R.id.nav_gallery,R.id.nav_slideshow)
+                .setOpenableLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
 
         init();
+
     }
 
     private void init() {
@@ -78,8 +81,6 @@ public class HomeActivity extends AppCompatActivity {
                 .setMessage("Waiting...")
                 .create();
         storageReference = FirebaseStorage.getInstance().getReference();
-
-
 
         navigationView.setNavigationItemSelectedListener(item -> {
             if(item.getItemId() == R.id.nav_sign_out){
@@ -193,6 +194,19 @@ public class HomeActivity extends AppCompatActivity {
             dialog.show();
         });
     }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+    }
+    @Override
+    protected void onStop() {
+        super.onStop();
+    }
+
+
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.

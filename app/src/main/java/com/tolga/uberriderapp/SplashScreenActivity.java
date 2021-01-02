@@ -1,5 +1,6 @@
 package com.tolga.uberriderapp;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -27,6 +28,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
 import com.tolga.uberriderapp.Model.RiderModel;
 import com.tolga.uberriderapp.Utils.UserUtils;
@@ -38,10 +40,9 @@ import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
-import io.reactivex.rxjava3.core.Completable;
+import io.reactivex.Completable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 
-import static com.google.firebase.iid.FirebaseInstanceId.getInstance;
 
 public class SplashScreenActivity extends AppCompatActivity {
 
@@ -71,6 +72,7 @@ public class SplashScreenActivity extends AppCompatActivity {
         super.onStop();
     }
 
+    @SuppressLint("CheckResult")
     private void delaySplashScreen() {
     progressBar.setVisibility(View.VISIBLE);
         Completable.timer(3, TimeUnit.SECONDS,
@@ -80,15 +82,6 @@ public class SplashScreenActivity extends AppCompatActivity {
                         );
 
     }
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_splash_screen);
-        
-        init();
-        
-    }
-
     private void init() {
         ButterKnife.bind(this);
 
@@ -97,14 +90,14 @@ public class SplashScreenActivity extends AppCompatActivity {
 
         providers = Arrays.asList(
                 new AuthUI.IdpConfig.PhoneBuilder().build(),
-                new AuthUI.IdpConfig.GoogleBuilder().build()
-        );
+                new AuthUI.IdpConfig.GoogleBuilder().build());
+
         firebaseAuth = FirebaseAuth.getInstance();
         listener = myFirebaseAuth -> {
             FirebaseUser user = myFirebaseAuth.getCurrentUser();
             if(user != null){
                 //Update token
-                getInstance()
+                FirebaseInstanceId.getInstance()
                         .getInstanceId()
                         .addOnFailureListener(e -> Toast.makeText(SplashScreenActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show())
                         .addOnSuccessListener((OnSuccessListener<InstanceIdResult>) instanceIdResult -> {
@@ -118,14 +111,21 @@ public class SplashScreenActivity extends AppCompatActivity {
             }
         };
 
-
-
-
     }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_splash_screen);
+        
+        init();
+        
+    }
+
 
     private void showLoginDialog() {
         AuthMethodPickerLayout authMethodPickerLayout = new AuthMethodPickerLayout
-                .Builder(R.layout.layout_sign_up)
+                .Builder(R.layout.layout_sign_in)
                 .setPhoneButtonId(R.id.btn_phone_sign_in)
                 .setGoogleButtonId(R.id.btn_google_sign_in)
                 .build();
@@ -164,13 +164,15 @@ public class SplashScreenActivity extends AppCompatActivity {
         btn_register.setOnClickListener(view -> {
             if (TextUtils.isEmpty(edt_first_name.getText().toString())){
                 Toast.makeText(this, "Please enter first name", Toast.LENGTH_SHORT).show();
-
+                return;
             }
             else if (TextUtils.isEmpty(edt_last_name.getText().toString())){
                 Toast.makeText(this, "Please enter last name", Toast.LENGTH_SHORT).show();
+                return;
             }
             else if (TextUtils.isEmpty(edt_phone_number.getText().toString())){
                 Toast.makeText(this, "Please enter phone number", Toast.LENGTH_SHORT).show();
+                return;
             }
             else {
                 RiderModel model = new RiderModel();
@@ -223,23 +225,26 @@ public class SplashScreenActivity extends AppCompatActivity {
 
     private void showLoginLayout() {
         AuthMethodPickerLayout authMethodPickerLayout = new AuthMethodPickerLayout
-                .Builder(R.layout.layout_sign_up)
+                .Builder(R.layout.layout_sign_in)
                 .setPhoneButtonId(R.id.btn_phone_sign_in)
                 .setGoogleButtonId(R.id.btn_google_sign_in)
                 .build();
+
         startActivityForResult(AuthUI.getInstance()
                 .createSignInIntentBuilder()
                 .setAuthMethodPickerLayout(authMethodPickerLayout)
                 .setIsSmartLockEnabled(false)
                 .setTheme(R.style.LoginTheme)
                 .setAvailableProviders(providers)
-                .build(), LOGIN_REQUEST_CODE);
+                .build(),LOGIN_REQUEST_CODE);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+
         if(requestCode != LOGIN_REQUEST_CODE){
+
             IdpResponse response = IdpResponse.fromResultIntent(data);
             if(resultCode != RESULT_OK){
                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();

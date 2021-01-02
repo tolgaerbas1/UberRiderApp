@@ -1,20 +1,26 @@
 package com.tolga.uberriderapp;
 
+import android.animation.ValueAnimator;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.TextView;
 
 import androidx.core.app.NotificationCompat;
 
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
+import com.google.maps.android.ui.IconGenerator;
 import com.tolga.uberriderapp.Model.AnimationModel;
 import com.tolga.uberriderapp.Model.DriverGeoModel;
 import com.tolga.uberriderapp.Model.RiderModel;
@@ -22,7 +28,6 @@ import com.tolga.uberriderapp.Model.RiderModel;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 
 public class Common {
@@ -31,9 +36,21 @@ public class Common {
     public static final String NOTI_TITLE = "title";
     public static final String NOTI_CONTENT = "body";
     public static final String DRIVERS_LOCATION_REFERENCES = "DriversLocation";
-    public static final String DRIVERS_INFO_REFERENCE = "DriverInfo";
+    public static final String DRIVER_INFO_REFERENCE = "DriverInfo";
+    public static final String REQUEST_DRIVER_TITLE = "RequestDriver";
+    public static final String RIDER_PICKUP_LOCATION = "PickupLocation";
+    public static final String RIDER_KEY = "RiderKey";
+    public static final String REQUEST_DRIVER_DECLINE = "Decline";
+    public static final String RIDER_PICKUP_LOCATION_STRING = "PickupLocationString";
+    public static final String RIDER_DESTINATION_STRING = "DestinationLocationString";
+    public static final String RIDER_DESTINATION = "DestinationLocation";
+    public static final String REQUEST_DRIVER_ACCEPT = "Accept";
+    public static final String TRIP_KEY = "TripKey";
+    public static final String TRIP = "Trips";
+    public static final String REQUEST_DRIVER_DECLINE_AND_REMOVE_TRIP = "DeclineAndRemoveTrip";
     public static RiderModel currentRider;
-    public static HashSet<DriverGeoModel> driversFound = new HashSet<DriverGeoModel>();
+    public static final String RIDER_COMPLETE_TRIP = "DriverCompleteTrip";
+    public static HashMap<String,DriverGeoModel> driversFound = new HashMap<>();
     public static HashMap<String, Marker> markerList = new HashMap<>();
     public static HashMap<String, AnimationModel> driverLocationSubscribe = new HashMap<String ,AnimationModel>();
 
@@ -147,4 +164,46 @@ public class Common {
         else
             txt_welcome.setText(new StringBuilder("Good Evening"));
     }
+
+    public static String formatDuration(String duration) {
+        if(duration.contains("mins"))
+            return duration.substring(0,duration.length()-1); //Remove letter "s"
+        else
+            return duration;
+    }
+
+    public static String formatAddress(String start_address) {
+        int firstIndexOfComma = start_address.indexOf(",");
+        return start_address.substring(0,firstIndexOfComma); //Get only address
+
+    }
+
+    static ValueAnimator valueAnimate(long duration, ValueAnimator.AnimatorUpdateListener listener){
+
+        ValueAnimator valueAnimator = ValueAnimator.ofFloat(0,100);
+        valueAnimator.setDuration(duration);
+        valueAnimator.addUpdateListener(listener);
+        valueAnimator.setRepeatCount(ValueAnimator.INFINITE);
+        valueAnimator.setRepeatMode(ValueAnimator.RESTART);
+
+        valueAnimator.start();
+        return valueAnimator;
+
+    }
+
+    public static Bitmap createIconWithDuration(Context context, String duration) {
+        View view = LayoutInflater.from(context).inflate(R.layout.pickup_info_with_duration, null);
+        TextView txt_time = (TextView)view.findViewById(R.id.txt_duration);
+        txt_time.setText(Common.getNumberFromText(duration));
+
+        IconGenerator generator = new IconGenerator(context);
+        generator.setContentView(view);
+        generator.setBackground(new ColorDrawable(Color.TRANSPARENT));
+        return generator.makeIcon();
+    }
+
+    private static String getNumberFromText(String duration) {
+            return duration.substring(0,duration.indexOf(" "));
+    }
+
 }
